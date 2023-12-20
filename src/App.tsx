@@ -1,58 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedOption } from '../src/app/hooks';
+import { RootState } from '../src/app/store'; // Import RootState type
 
-function App() {
+const MyComponent: React.FC = () => {
+  const dispatch = useDispatch();
+  const selectedOption = useSelector((state: RootState) => state.app.selectedOption);
+
+  const handleOptionChange = (option: string) => {
+    dispatch(setSelectedOption(option));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="option1"
+            checked={selectedOption === 'option1'}
+            onChange={() => handleOptionChange('option1')}
+          />
+          Option 1
+        </label>
+      </div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="option2"
+            checked={selectedOption === 'option2'}
+            onChange={() => handleOptionChange('option2')}
+          />
+          Option 2
+        </label>
+      </div>
+
+      {selectedOption === 'option1' ? (
+        <p>hi</p>
+        // <Form1 /* ...props for Form1 */ />
+      ) : (
+        <p>hey</p>
+        // <Form2 /* ...props for Form2 */ />
+      )}
     </div>
   );
-}
+};
 
-export default App;
+export default MyComponent;
