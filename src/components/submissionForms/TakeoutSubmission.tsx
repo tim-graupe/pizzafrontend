@@ -9,13 +9,15 @@ export interface TakeoutPizzaData {
   name: string;
   style: string;
   recipe: string;
+  photo: null;
 }
 
 export const TakeoutSubmissionForm: React.FC<PizzaProps> = ({onSubmit}) => {
   const [pizzaData, setPizzaData] = useState<TakeoutPizzaData>({
     name: "",
     style: "",
-    recipe: ""
+    recipe: "",
+    photo: null
   })
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;

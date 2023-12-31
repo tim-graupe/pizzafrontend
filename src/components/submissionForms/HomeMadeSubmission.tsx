@@ -1,35 +1,39 @@
 import React, { useState } from "react";
 
-
 interface PizzaProps {
-  onSubmit: (pizzaData: PizzaData) => void
+  onSubmit: (pizzaData: PizzaData) => void;
 }
 
 export interface PizzaData {
   name: string;
   style: string;
   recipe: string;
+  photo: File | null;
 }
 
-export const HomemadeSubmissionForm: React.FC<PizzaProps> = ({onSubmit}) => {
+export const HomemadeSubmissionForm: React.FC<PizzaProps> = ({ onSubmit }) => {
   const [pizzaData, setPizzaData] = useState<PizzaData>({
     name: "",
     style: "",
-    recipe: ""
-  })
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-    setPizzaData({...pizzaData, [name]: value})
-  }
+    recipe: "",
+    photo: null,
+  });
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setPizzaData({ ...pizzaData, [name]: value });
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Pizza submitted: ", pizzaData)
-  }
+    console.log("Pizza submitted: ", pizzaData);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-            <label>
+      <label>
         Name:
         <input
           type="text"
@@ -54,8 +58,7 @@ export const HomemadeSubmissionForm: React.FC<PizzaProps> = ({onSubmit}) => {
 
       <label>
         Recipe:
-        <input
-          type="text"
+        <textarea
           name="recipe"
           value={pizzaData.recipe}
           onChange={handleInputChange}
@@ -65,5 +68,5 @@ export const HomemadeSubmissionForm: React.FC<PizzaProps> = ({onSubmit}) => {
       <br />
       <button type="submit">Submit</button>
     </form>
-  )
-}
+  );
+};
