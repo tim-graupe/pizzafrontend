@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 interface PizzaProps {
   onSubmit: (pizzaData: PizzaData) => void;
@@ -12,60 +12,61 @@ export interface PizzaData {
 }
 
 export const HomemadeSubmissionForm: React.FC<PizzaProps> = ({ onSubmit }) => {
-  const [pizzaData, setPizzaData] = useState<PizzaData>({
-    name: "",
-    style: "",
-    recipe: "",
-    photo: null,
+  const [formData, setPizzaData] = useState<PizzaData>({
+    name: '',
+    style: '',
+    recipe: '',
+    photo: null
   });
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setPizzaData({ ...pizzaData, [name]: value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPizzaData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("Pizza submitted: ", pizzaData);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:4000/new_pizza', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.error('Error sending the request:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={pizzaData.name}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Style:
-        <input
-          type="text"
-          name="style"
-          value={pizzaData.style}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
+      <label htmlFor="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
 
-      <label>
-        Recipe:
-        <textarea
-          name="recipe"
-          value={pizzaData.recipe}
-          onChange={handleInputChange}
-          // required
-        />
-      </label>
-      <br />
+      <label htmlFor="style">Style:</label>
+      <input
+        type="text"
+        id="style"
+        name="style"
+        value={formData.style}
+        onChange={handleChange}
+        required
+      />
+
       <button type="submit">Submit</button>
     </form>
   );
