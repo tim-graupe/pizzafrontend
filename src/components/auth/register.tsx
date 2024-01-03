@@ -29,7 +29,7 @@ export const Register: React.FC<UserProps> = ({ onSubmit }) => {
         password: userData.password,
       };
   
-      const response = await fetch('http://localhost:4000/users/register', {
+      const response = await fetch('http://localhost:4000/users/login', {
         method: 'POST',
         mode: 'cors',
         headers: {
