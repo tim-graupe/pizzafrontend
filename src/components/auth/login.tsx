@@ -9,7 +9,7 @@ export interface UserData {
   password: string;
 }
 
-export const Register: React.FC<UserProps> = ({ onSubmit }) => {
+export const Login: React.FC<UserProps> = ({ onSubmit }) => {
   const [userData, setUserData] = React.useState<UserData>({
     username: "",
     password: "",
