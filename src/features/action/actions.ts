@@ -1,5 +1,4 @@
-// actions.ts
-export const SET_SELECTED_OPTION = 'SET_SELECTED_OPTION';
+export const SET_SELECTED_OPTION = "SET_SELECTED_OPTION";
 
 export interface SetSelectedOptionAction {
   type: typeof SET_SELECTED_OPTION;
