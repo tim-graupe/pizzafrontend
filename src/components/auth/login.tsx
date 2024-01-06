@@ -40,18 +40,34 @@ export const Login: React.FC<UserProps> = ({ onSubmit }) => {
   
       const result = await response.json();
       console.log(result);
+      sessionStorage.setItem('user', JSON.stringify(result))
     } catch (error) {
       console.error('Error ===>:', error);
     }
   };
   
-
+  const test = async () => {
+    try {
+ 
+      const response = await fetch('http://localhost:4000/users/logout', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    
+        console.log(response);
+    } catch (error) {
+      console.error('Error ===>:', error);
+    }
+  }
 
 
   return (
-    <form onSubmit={handleSubmit}>
+<div>
+  <button onClick={test}>Test</button>
+<form onSubmit={handleSubmit}>
       <label htmlFor="username">
-        Email:      </label>
+        Email!!:      </label>
 
         <input
           type="email"
@@ -72,5 +88,6 @@ export const Login: React.FC<UserProps> = ({ onSubmit }) => {
         />
       <button type="submit">Submit</button>
     </form>
+</div>
   );
 };
